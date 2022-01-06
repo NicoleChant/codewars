@@ -24,9 +24,6 @@ class Student:
             return self.name if self.wealth()>=student.wealth() else student.name
         except AttributeError:
             raise AttributeError()
-            
-    def __str__(self) -> str:
-        return f"{self.name}"
     
     def advanced_compare(self,students:List[Student]) -> List[str]:
         try:
