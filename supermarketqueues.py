@@ -2,8 +2,7 @@ import numpy as np
 
 def queue_time(customers,n):
     """Constructive solution; Recreation of the Queue Matrix"""
-    if len(customers) == 0: return 0
-    elif len(customers) <= n: return max(customers) 
+    if len(customers) <= n: return max(customers, default=0) 
     queues = np.zeros(shape=(n,len(customers))).astype('int')
     queues[:,0] = np.array([[customers[i]] for i in range(n)]).T
     for customer in customers[n:]:
@@ -11,14 +10,24 @@ def queue_time(customers,n):
         queues[row_index,np.argmin(queues[row_index])] = customer
     return np.max(queues.sum(axis=1) , axis = 0)
 
+def queue_time_simple(customers,n):
+    if len(customers) <=n: return max(customers, default = 0)
+    queues = np.zeros(shape=(n,) , dtype = 'int')
+    for c in customers:
+        queues[np.argmin(queues)] += c
+    return max(queues)
+
 
 def main():
+    queue = []
+    assert (0 == queue_time_simple(queue,0))
+
     queue = [1,2,3,4,1,3,5,7,1,2]
     total_time = 12
-    assert total_time == queue_time(queue,3)
+    assert total_time == queue_time_simple(queue,3)
 
     queue = np.random.randint(1,10,10)
-    total_time = queue_time(queue,3)
+    total_time = queue_time_simple(queue,3)
     print(total_time)
 
 
