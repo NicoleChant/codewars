@@ -2,6 +2,7 @@ import numpy as np
 
 def queue_time(customers,n):
     """Constructive solution; Recreation of the Queue Matrix"""
+    
     if len(customers) <= n: return max(customers, default=0) 
     queues = np.zeros(shape=(n,len(customers))).astype('int')
     queues[:,0] = np.array([[customers[i]] for i in range(n)]).T
